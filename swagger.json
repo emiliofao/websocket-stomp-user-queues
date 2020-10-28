@@ -1,0 +1,1776 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "APIs to provide services for managing users.",
+    "version": "1.0-SNAPSHOT",
+    "title": "User Management Service APIs",
+    "contact": {
+      "name": "TPZ Project Team",
+      "email": "tpz@telespazio.com"
+    },
+    "license": {
+      "name": "Proprietary"
+    }
+  },
+  "host": "localhost",
+  "tags": [
+    {
+      "name": "Functionalities management APIs."
+    },
+    {
+      "name": "Legal Entity management APIs."
+    },
+    {
+      "name": "Role management APIs."
+    },
+    {
+      "name": "TPZ configuration APIs for apid configurations."
+    },
+    {
+      "name": "TPZ configuration APIs for log configurations."
+    },
+    {
+      "name": "User management APIs."
+    }
+  ],
+  "schemes": [
+    "https"
+  ],
+  "paths": {
+    "/tpz-user-management/admin/legal-entity": {
+      "get": {
+        "tags": [
+          "Legal Entity management APIs."
+        ],
+        "summary": "Get all legal entities.",
+        "description": "",
+        "operationId": "getAllLegalEntities",
+        "parameters": [
+          {
+            "name": "",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int64"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation.",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/LegalEntityDto"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input."
+          },
+          "404": {
+            "description": "Legal entity not found."
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/tpz-user-management/admin/user": {
+      "get": {
+        "tags": [
+          "User management APIs."
+        ],
+        "summary": "Find all users.",
+        "description": "",
+        "operationId": "getAllUsers",
+        "parameters": [
+          {
+            "name": "active",
+            "in": "query",
+            "required": false,
+            "type": "boolean"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation.",
+            "schema": {
+              "$ref": "#/definitions/PageUserDto"
+            }
+          },
+          "400": {
+            "description": "Invalid input."
+          },
+          "404": {
+            "description": "Users not found."
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "User management APIs."
+        ],
+        "summary": "Create user.",
+        "description": "",
+        "operationId": "createUser",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": false,
+            "schema": {
+              "$ref": "#/definitions/UserDto"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation.",
+            "schema": {
+              "$ref": "#/definitions/UserDto"
+            }
+          },
+          "400": {
+            "description": "Invalid input."
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/tpz-user-management/admin/user/delete/{username}": {
+      "delete": {
+        "tags": [
+          "User management APIs."
+        ],
+        "summary": "Delete a user against those stored in the database.",
+        "description": "",
+        "operationId": "deleteUser",
+        "parameters": [
+          {
+            "name": "username",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          },
+          "401": {
+            "description": "Wrong credentials."
+          }
+        }
+      }
+    },
+    "/tpz-user-management/admin/user/legal-entities/{userId}": {
+      "post": {
+        "tags": [
+          "User management APIs."
+        ],
+        "summary": "Assign legal entities to user.",
+        "description": "",
+        "operationId": "assignLegalEntitiesToUser",
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "required": false,
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/LegalEntityDto"
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation.",
+            "schema": {
+              "$ref": "#/definitions/UserDto"
+            }
+          },
+          "400": {
+            "description": "Invalid input."
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/tpz-user-management/admin/user/update": {
+      "post": {
+        "tags": [
+          "User management APIs."
+        ],
+        "summary": "Update a user against those stored in the database.",
+        "description": "",
+        "operationId": "update",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": false,
+            "schema": {
+              "$ref": "#/definitions/UserDto"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/UserDto"
+            }
+          },
+          "401": {
+            "description": "Wrong credentials."
+          }
+        }
+      }
+    },
+    "/tpz-user-management/admin/user/{username}": {
+      "get": {
+        "tags": [
+          "User management APIs."
+        ],
+        "summary": "Find user by username.",
+        "description": "",
+        "operationId": "getUserByUsername",
+        "parameters": [
+          {
+            "name": "username",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation.",
+            "schema": {
+              "$ref": "#/definitions/UserDto"
+            }
+          },
+          "400": {
+            "description": "Invalid input."
+          },
+          "404": {
+            "description": "User not found."
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/tpz-user-management/confirm-reset-check-token": {
+      "get": {
+        "tags": [
+          "User management APIs."
+        ],
+        "summary": "Find user by reset token.",
+        "description": "",
+        "operationId": "getUserByResetToken",
+        "parameters": [
+          {
+            "name": "token",
+            "in": "query",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "company",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "username",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation.",
+            "schema": {
+              "$ref": "#/definitions/UserDto"
+            }
+          },
+          "400": {
+            "description": "Invalid input."
+          },
+          "404": {
+            "description": "User not found."
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/tpz-user-management/functionality": {
+      "get": {
+        "tags": [
+          "Functionalities management APIs."
+        ],
+        "summary": "Find functionalities",
+        "description": "",
+        "operationId": "getFunctionalities",
+        "responses": {
+          "200": {
+            "description": "Successful operation.",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/FunctionalityDto"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input."
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Functionalities management APIs."
+        ],
+        "summary": "Add functionalities",
+        "description": "",
+        "operationId": "addFunctionality",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": false,
+            "schema": {
+              "$ref": "#/definitions/FunctionalityDto"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation.",
+            "schema": {
+              "$ref": "#/definitions/FunctionalityDto"
+            }
+          },
+          "400": {
+            "description": "Invalid input."
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/tpz-user-management/functionality/{id}": {
+      "post": {
+        "tags": [
+          "Functionalities management APIs."
+        ],
+        "summary": "Edit functionalities",
+        "description": "",
+        "operationId": "editFunctionality",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "required": false,
+            "schema": {
+              "$ref": "#/definitions/FunctionalityDto"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation.",
+            "schema": {
+              "$ref": "#/definitions/FunctionalityDto"
+            }
+          },
+          "400": {
+            "description": "Invalid input."
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Functionalities management APIs."
+        ],
+        "summary": "Delete functionalities",
+        "description": "",
+        "operationId": "deleteFunctionalitiesById",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation.",
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          },
+          "400": {
+            "description": "Invalid input."
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/tpz-user-management/legal-entity/entity/{entity-id}/type/{entity-type}": {
+      "get": {
+        "tags": [
+          "Legal Entity management APIs."
+        ],
+        "summary": "Find legal entity by entity Id and entity Type.",
+        "description": "",
+        "operationId": "getLegalEntityByEntityIdAndEntityType",
+        "parameters": [
+          {
+            "name": "entity-id",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          },
+          {
+            "name": "entity-type",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation.",
+            "schema": {
+              "$ref": "#/definitions/LegalEntityDto"
+            }
+          },
+          "400": {
+            "description": "Invalid input."
+          },
+          "404": {
+            "description": "Legal entity not found."
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/tpz-user-management/legal-entity/user/{userId}": {
+      "get": {
+        "tags": [
+          "Legal Entity management APIs."
+        ],
+        "summary": "Find user legal entities by userId.",
+        "description": "",
+        "operationId": "getUserLegalEntitiesByUserId",
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          },
+          {
+            "name": "companyId",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int64"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation.",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/LegalEntityDto"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input."
+          },
+          "404": {
+            "description": "Legal entity not found."
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/tpz-user-management/legal-entity/{legal-entity-id}": {
+      "get": {
+        "tags": [
+          "Legal Entity management APIs."
+        ],
+        "summary": "Find legal entity by Id.",
+        "description": "",
+        "operationId": "getUserLegalEntityById",
+        "parameters": [
+          {
+            "name": "legal-entity-id",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation.",
+            "schema": {
+              "$ref": "#/definitions/LegalEntityDto"
+            }
+          },
+          "400": {
+            "description": "Invalid input."
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/tpz-user-management/role": {
+      "get": {
+        "tags": [
+          "Role management APIs."
+        ],
+        "summary": "Find all roles",
+        "description": "",
+        "operationId": "getAllRoles",
+        "responses": {
+          "200": {
+            "description": "Successful operation.",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/RoleDto"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input."
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Role management APIs."
+        ],
+        "summary": "Create role",
+        "description": "",
+        "operationId": "createRole",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": false,
+            "schema": {
+              "$ref": "#/definitions/RoleDto"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation.",
+            "schema": {
+              "$ref": "#/definitions/RoleDto"
+            }
+          },
+          "400": {
+            "description": "Invalid input."
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/tpz-user-management/role/user/{userId}": {
+      "get": {
+        "tags": [
+          "Role management APIs."
+        ],
+        "summary": "Find user roles with functionalities by userId.",
+        "description": "",
+        "operationId": "getUserRolesByUserId",
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation.",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/RoleDto"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input."
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/tpz-user-management/role/{roleId}": {
+      "get": {
+        "tags": [
+          "Role management APIs."
+        ],
+        "summary": "Find roles with functionalities by roleId.",
+        "description": "",
+        "operationId": "getRoleByRoleId",
+        "parameters": [
+          {
+            "name": "roleId",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation.",
+            "schema": {
+              "$ref": "#/definitions/RoleDto"
+            }
+          },
+          "400": {
+            "description": "Invalid input."
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Role management APIs."
+        ],
+        "summary": "Update role",
+        "description": "",
+        "operationId": "updateRole",
+        "parameters": [
+          {
+            "name": "roleId",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "required": false,
+            "schema": {
+              "$ref": "#/definitions/RoleDto"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation.",
+            "schema": {
+              "$ref": "#/definitions/RoleDto"
+            }
+          },
+          "400": {
+            "description": "Invalid input."
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Role management APIs."
+        ],
+        "summary": "Delete role by id",
+        "description": "",
+        "operationId": "deleteRole",
+        "parameters": [
+          {
+            "name": "roleId",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation.",
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          },
+          "400": {
+            "description": "Invalid input."
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/tpz-user-management/user": {
+      "put": {
+        "tags": [
+          "User management APIs."
+        ],
+        "summary": "Update user profile against those stored in the database.",
+        "description": "",
+        "operationId": "updateUser",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": false,
+            "schema": {
+              "$ref": "#/definitions/UserDto"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/UserDto"
+            }
+          },
+          "401": {
+            "description": "Wrong credentials."
+          }
+        }
+      }
+    },
+    "/tpz-user-management/user-apid": {
+      "post": {
+        "tags": [
+          "TPZ configuration APIs for apid configurations."
+        ],
+        "summary": "Create user apid configuration for a user.",
+        "description": "",
+        "operationId": "createUserApid",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": false,
+            "schema": {
+              "$ref": "#/definitions/UserApidDto"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation.",
+            "schema": {
+              "$ref": "#/definitions/UserApidDto"
+            }
+          },
+          "400": {
+            "description": "Invalid input."
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "TPZ configuration APIs for apid configurations."
+        ],
+        "summary": "Update user apid configuration for a user.",
+        "description": "",
+        "operationId": "updateUserApid",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": false,
+            "schema": {
+              "$ref": "#/definitions/UserApidDto"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation.",
+            "schema": {
+              "$ref": "#/definitions/UserApidDto"
+            }
+          },
+          "400": {
+            "description": "Invalid input."
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/tpz-user-management/user-apid/{userId}": {
+      "get": {
+        "tags": [
+          "TPZ configuration APIs for apid configurations."
+        ],
+        "summary": "Get user apid by userId.",
+        "description": "",
+        "operationId": "getUserApidByUserId",
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation.",
+            "schema": {
+              "$ref": "#/definitions/UserApidDto"
+            }
+          },
+          "400": {
+            "description": "Invalid input."
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "TPZ configuration APIs for apid configurations."
+        ],
+        "summary": "Create user apid configuration for a user.",
+        "description": "",
+        "operationId": "deleteUserApid",
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          },
+          {
+            "name": "missionId",
+            "in": "query",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          },
+          {
+            "name": "satelliteId",
+            "in": "query",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation.",
+            "schema": {
+              "$ref": "#/definitions/UserApidDto"
+            }
+          },
+          "400": {
+            "description": "Invalid input."
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/tpz-user-management/user-change-password": {
+      "post": {
+        "tags": [
+          "User management APIs."
+        ],
+        "summary": "Update user password",
+        "description": "",
+        "operationId": "userChangePassword",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": false,
+            "schema": {
+              "$ref": "#/definitions/UserPasswordUpdateDto"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation.",
+            "schema": {
+              "$ref": "#/definitions/UserDto"
+            }
+          },
+          "400": {
+            "description": "Invalid input."
+          },
+          "404": {
+            "description": "User not found."
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/tpz-user-management/user-forget-password": {
+      "post": {
+        "tags": [
+          "User management APIs."
+        ],
+        "summary": "User forget password recovery",
+        "description": "",
+        "operationId": "updateUserPassword",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": false,
+            "schema": {
+              "$ref": "#/definitions/UserPasswordUpdateDto"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation.",
+            "schema": {
+              "$ref": "#/definitions/UserDto"
+            }
+          },
+          "400": {
+            "description": "Invalid input."
+          },
+          "404": {
+            "description": "User not found."
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/tpz-user-management/user-generate-reset-token": {
+      "get": {
+        "tags": [
+          "User management APIs."
+        ],
+        "summary": "Generate user reset token requested by user.",
+        "description": "",
+        "operationId": "generateUserResetToken",
+        "parameters": [
+          {
+            "name": "company",
+            "in": "query",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "username",
+            "in": "query",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation."
+          },
+          "400": {
+            "description": "Invalid input."
+          },
+          "404": {
+            "description": "User not found."
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/tpz-user-management/user-log": {
+      "post": {
+        "tags": [
+          "TPZ configuration APIs for log configurations."
+        ],
+        "summary": "Create user log by username.",
+        "description": "",
+        "operationId": "createOrUpdateUserLog",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": false,
+            "schema": {
+              "$ref": "#/definitions/UserLogDto"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation.",
+            "schema": {
+              "$ref": "#/definitions/UserLogDto"
+            }
+          },
+          "400": {
+            "description": "Invalid input."
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/tpz-user-management/user-log/{username}": {
+      "get": {
+        "tags": [
+          "TPZ configuration APIs for log configurations."
+        ],
+        "summary": "Get user log by username.",
+        "description": "",
+        "operationId": "getUserLogByUsername",
+        "parameters": [
+          {
+            "name": "username",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation.",
+            "schema": {
+              "$ref": "#/definitions/UserLogDto"
+            }
+          },
+          "400": {
+            "description": "Invalid input."
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/tpz-user-management/user/data": {
+      "get": {
+        "tags": [
+          "User management APIs."
+        ],
+        "summary": "Find user by token.",
+        "description": "",
+        "operationId": "getUserByToken",
+        "responses": {
+          "200": {
+            "description": "Successful operation.",
+            "schema": {
+              "$ref": "#/definitions/UserDto"
+            }
+          },
+          "400": {
+            "description": "Invalid input."
+          },
+          "404": {
+            "description": "User not found."
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/tpz-user-management/user/login": {
+      "post": {
+        "tags": [
+          "User management APIs."
+        ],
+        "summary": "Match credentials of a user against those stored in the database.",
+        "description": "",
+        "operationId": "login",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": false,
+            "schema": {
+              "$ref": "#/definitions/UserDto"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/UserDto"
+            }
+          },
+          "401": {
+            "description": "Wrong credentials."
+          }
+        }
+      }
+    }
+  },
+  "securityDefinitions": {
+    "basicAuth": {
+      "type": "basic"
+    }
+  },
+  "definitions": {
+    "FunctionalityDto": {
+      "type": "object",
+      "required": [
+        "id"
+      ],
+      "properties": {
+        "creationDate": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "lastUpdateDate": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "companyId": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "id": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "name": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "operation": {
+          "type": "string"
+        }
+      }
+    },
+    "LegalEntityDto": {
+      "type": "object",
+      "required": [
+        "companyId",
+        "entityType",
+        "id",
+        "idEntity",
+        "parentId"
+      ],
+      "properties": {
+        "creationDate": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "lastUpdateDate": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "id": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "idEntity": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "entityType": {
+          "type": "string",
+          "enum": [
+            "COMPANY",
+            "MISSION",
+            "SATELLITE"
+          ]
+        },
+        "entityDescription": {
+          "type": "string"
+        },
+        "parentId": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "companyId": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "apids": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "allApids": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "Page": {
+      "type": "object",
+      "properties": {
+        "totalElements": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "totalPages": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "number": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "size": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "content": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          }
+        },
+        "sort": {
+          "$ref": "#/definitions/Sort"
+        },
+        "first": {
+          "type": "boolean"
+        },
+        "pageable": {
+          "$ref": "#/definitions/Pageable"
+        },
+        "last": {
+          "type": "boolean"
+        },
+        "numberOfElements": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "empty": {
+          "type": "boolean"
+        }
+      }
+    },
+    "PageUserDto": {
+      "type": "object",
+      "properties": {
+        "totalElements": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "totalPages": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "number": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "size": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "content": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/UserDto"
+          }
+        },
+        "sort": {
+          "$ref": "#/definitions/Sort"
+        },
+        "first": {
+          "type": "boolean"
+        },
+        "pageable": {
+          "$ref": "#/definitions/Pageable"
+        },
+        "last": {
+          "type": "boolean"
+        },
+        "numberOfElements": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "empty": {
+          "type": "boolean"
+        }
+      }
+    },
+    "Pageable": {
+      "type": "object",
+      "properties": {
+        "offset": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "sort": {
+          "$ref": "#/definitions/Sort"
+        },
+        "pageNumber": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "paged": {
+          "type": "boolean"
+        },
+        "pageSize": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "unpaged": {
+          "type": "boolean"
+        }
+      }
+    },
+    "RoleDto": {
+      "type": "object",
+      "required": [
+        "description",
+        "id",
+        "name"
+      ],
+      "properties": {
+        "creationDate": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "lastUpdateDate": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "id": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "name": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "functionalities": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/FunctionalityDto"
+          }
+        }
+      }
+    },
+    "Sort": {
+      "type": "object",
+      "properties": {
+        "sorted": {
+          "type": "boolean"
+        },
+        "unsorted": {
+          "type": "boolean"
+        },
+        "empty": {
+          "type": "boolean"
+        }
+      }
+    },
+    "UserApidDto": {
+      "type": "object",
+      "properties": {
+        "creationDate": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "lastUpdateDate": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "companyId": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "missionId": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "satelliteId": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "userApidId": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "userId": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "apidVisibility": {
+          "type": "string"
+        }
+      }
+    },
+    "UserDto": {
+      "type": "object",
+      "required": [
+        "email",
+        "firstName",
+        "language",
+        "lastName",
+        "password",
+        "userId",
+        "username"
+      ],
+      "properties": {
+        "creationDate": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "lastUpdateDate": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "companyId": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "userId": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "username": {
+          "type": "string"
+        },
+        "salt": {
+          "type": "string"
+        },
+        "password": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        },
+        "active": {
+          "type": "boolean"
+        },
+        "firstName": {
+          "type": "string"
+        },
+        "lastName": {
+          "type": "string"
+        },
+        "lastLogin": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "lastPasswordChange": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "forceReset": {
+          "type": "boolean"
+        },
+        "language": {
+          "type": "string"
+        },
+        "locateNumberFormat": {
+          "type": "string"
+        },
+        "dateFormat": {
+          "type": "string"
+        },
+        "numberFormatExponential": {
+          "type": "string"
+        },
+        "numberFormatDecimal": {
+          "type": "string"
+        },
+        "userRole": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/RoleDto"
+          }
+        },
+        "userRoles": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/UserRoleDto"
+          }
+        },
+        "legalEntities": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/LegalEntityDto"
+          }
+        },
+        "resetToken": {
+          "type": "string"
+        },
+        "roles": {
+          "type": "array",
+          "items": {
+            "type": "integer",
+            "format": "int64"
+          }
+        },
+        "userLogDto": {
+          "$ref": "#/definitions/UserLogDto"
+        }
+      }
+    },
+    "UserLogDto": {
+      "type": "object",
+      "required": [
+        "username"
+      ],
+      "properties": {
+        "creationDate": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "lastUpdateDate": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "companyId": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "missionId": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "satelliteId": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "userLogsId": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "username": {
+          "type": "string"
+        },
+        "debug": {
+          "type": "boolean"
+        },
+        "info": {
+          "type": "boolean"
+        },
+        "warn": {
+          "type": "boolean"
+        },
+        "error": {
+          "type": "boolean"
+        },
+        "fatal": {
+          "type": "boolean"
+        },
+        "trace": {
+          "type": "boolean"
+        },
+        "event": {
+          "type": "boolean"
+        },
+        "ool": {
+          "type": "boolean"
+        },
+        "alarm": {
+          "type": "boolean"
+        },
+        "showDebug": {
+          "type": "boolean"
+        },
+        "showInfo": {
+          "type": "boolean"
+        },
+        "showWarn": {
+          "type": "boolean"
+        },
+        "showError": {
+          "type": "boolean"
+        },
+        "showFatal": {
+          "type": "boolean"
+        },
+        "showTrace": {
+          "type": "boolean"
+        },
+        "showOol": {
+          "type": "boolean"
+        },
+        "showEvent": {
+          "type": "boolean"
+        },
+        "showAlarm": {
+          "type": "boolean"
+        },
+        "windowed": {
+          "type": "boolean"
+        },
+        "resized": {
+          "type": "boolean"
+        },
+        "locked": {
+          "type": "boolean"
+        },
+        "minimized": {
+          "type": "boolean"
+        },
+        "userLogConfigurationMap": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "boolean"
+          }
+        }
+      }
+    },
+    "UserPasswordUpdateDto": {
+      "type": "object",
+      "required": [
+        "password",
+        "passwordConfirm",
+        "token",
+        "userId"
+      ],
+      "properties": {
+        "creationDate": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "lastUpdateDate": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "companyId": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "userId": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "password": {
+          "type": "string"
+        },
+        "passwordConfirm": {
+          "type": "string"
+        },
+        "oldPassword": {
+          "type": "string"
+        },
+        "token": {
+          "type": "string"
+        }
+      }
+    },
+    "UserRoleDto": {
+      "type": "object",
+      "properties": {
+        "creationDate": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "lastUpdateDate": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "role": {
+          "$ref": "#/definitions/RoleDto"
+        },
+        "roleId": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "userId": {
+          "type": "integer",
+          "format": "int64"
+        }
+      }
+    }
+  }
+}
